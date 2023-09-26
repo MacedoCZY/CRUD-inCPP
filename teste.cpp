@@ -1,14 +1,15 @@
-//g++ teste.cpp -o teste.x -masm=intel
+//g++ teste.cpp -o teste.x -masm=intel -lmysqlcppconn
 #include <stdio.h>
 #include <iostream>
 #include "classe.hpp"
-
-using namespace std;
+#include "bdteste.hpp"
 
 void teste();
 
 int main() {
-    
+ 
+    cout << endl;
+
     cout << "Entro aqui" << endl;
     
     cout << "Modelo:" << endl;
@@ -29,12 +30,16 @@ int main() {
 
     *prt = car;
     cout << prt->modelo << endl;
-    
+
+    SqlTT bd;
+
+    bd.create(prt->modelo, prt->marca, prt->ano);
+
     free(prt);
 
     car.consulta();
 
-    car.teste();
+    car.teste();   
 
     return 0 ;
 }
