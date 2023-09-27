@@ -5,16 +5,18 @@
 #include "bdteste.hpp"
 
 int main() {
+    Carro *prt = (Carro*) malloc(sizeof(Carro));
+    Carro *newPrt = (Carro*) malloc(sizeof(Carro));
+
     while(true){
-        cout << "1-CREATE\n2-DELETE\n3-READ\n0-EXIT" << endl;
+        cout << "1-CREATE\n2-DELETE\n3-READ\n4-UPDATE\n0-EXIT" << endl;
         int chc;
         cin >> chc;
         if(chc == 0){
             break;
         }
-        Carro *prt = (Carro*) malloc(sizeof(Carro));
-
-        if(chc == 1 || chc == 2){
+        
+        if(chc == 1 || chc == 2 || chc == 4){
             cout << "Modelo:" << endl;
             string modelo;
             cin >> modelo;
@@ -30,13 +32,30 @@ int main() {
             cout << "Size class: "<< sizeof(prt) << endl;
 
             *prt = car;
-            cout << prt->modelo << endl;
             
             car.consulta();
             car.teste();
 
         }
-        if(chc != 1 && chc!= 2 && chc != 3){
+        if(chc == 4){
+            cout << "newModelo:" << endl;
+            string newModelo;
+            cin >> newModelo;
+            cout << "newMarca: " << endl;
+            string newMarca;
+            cin >> newMarca;
+            int newAno;
+            cout << "newAno: " << endl;
+            cin >> newAno;
+
+            Carro newCar(newModelo, newMarca, newAno);
+
+            *newPrt = newCar;
+            
+            SqlTT bd;
+            bd.update(prt->modelo, prt->marca, prt->ano, newModelo, newMarca, newAno);
+        }
+        if(chc != 1 && chc!= 2 && chc != 3 && chc != 4){
             cout << "Bed Opt!" << endl;
             break;
         }
@@ -55,8 +74,8 @@ int main() {
             SqlTT bd;
             bd.read();
         }
-
-        free(prt);
     }
+    free(prt);
+    free(newPrt);
     return 0;
 }

@@ -19,7 +19,40 @@ class SqlTT{
         void connect();
         void delet(string modelo, string marca, int ano);
         void read();
+        void update(string modelo, string marca, int ano, string newModelo, string newMarca, int newAno);
 };
+
+void SqlTT::update(string modelo, string marca, int ano, string newModelo, string newMarca, int newAno){
+    try{
+        sql::PreparedStatement *prStm;
+        connect();
+
+        con->setSchema("cars");
+        //prStm = con->prepareStatement("UPDATE carro SET modelo=?,marca=? WHERE ano=?");
+        
+        //prStm->setString(1, newModelo);
+        //prStm->setString(2, newMarca);
+        //prStm->setInt(3, ano);
+        
+        prStm = con->prepareStatement("UPDATE carro SET ano=? WHERE modelo=? AND marca=?");
+
+        prStm->setString(1, modelo);
+        prStm->setString(2, marca);
+        prStm->setInt(3, newAno);
+
+        prStm->execute();
+
+        cout << "Updated!" << endl;
+
+        delete prStm;
+        delete con;
+
+    }catch(sql::SQLException &e){
+        cout << "ERRO: " << e.what();
+        cout << "Update Problem!" <<  endl;
+    }
+    cout << endl;
+}
 
 void SqlTT::read(){
     try{
