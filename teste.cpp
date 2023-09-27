@@ -6,10 +6,12 @@
 
 int main() {
     while(true){
-        cout << "1-CREATE\n2-DELETE" << endl;
+        cout << "1-CREATE\n2-DELETE\n3-READ\n0-EXIT" << endl;
         int chc;
         cin >> chc;
-        
+        if(chc == 0){
+            break;
+        }
         Carro *prt = (Carro*) malloc(sizeof(Carro));
 
         if(chc == 1 || chc == 2){
@@ -33,7 +35,8 @@ int main() {
             car.consulta();
             car.teste();
 
-        }else{
+        }
+        if(chc != 1 && chc!= 2 && chc != 3){
             cout << "Bed Opt!" << endl;
             break;
         }
@@ -46,6 +49,11 @@ int main() {
         if(chc == 2){
             SqlTT bd;
             bd.delet(prt->modelo, prt->marca, prt->ano);
+        }
+
+        if(chc == 3){
+            SqlTT bd;
+            bd.read();
         }
 
         free(prt);

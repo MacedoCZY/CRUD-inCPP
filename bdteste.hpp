@@ -5,6 +5,7 @@
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/prepared_statement.h>
+#include <cppconn/statement.h>
 
 using namespace std;
 using namespace sql;
@@ -17,7 +18,39 @@ class SqlTT{
         void create(string modelo, string marca, int ano);
         void connect();
         void delet(string modelo, string marca, int ano);
+        void read();
 };
+
+void SqlTT::read(){
+    try{
+        sql::Statement *stm;
+        sql::ResultSet *res;
+        connect();
+
+        con->setSchema("cars");
+        stm = con->createStatement();
+        res = stm->executeQuery("SELECT * FROM carro");
+
+        cout << "Table Data: " << endl;
+
+        while(res->next()){
+            cout << "-----------------------------------------" << endl;
+            cout << "Modelo: " << res->getString(1) << endl;
+            cout << "Marca: " << res->getString(2) << endl;
+            cout << "Ano: " << res->getInt(3) << endl;
+        }
+        cout << "-----------------------------------------" << endl;
+
+        delete res;
+        delete stm;
+        delete con;
+
+    }catch(sql::SQLException &e){
+        cout << "ERRO: " << e.what();
+        cout << "Read Problem!" << endl;
+    }
+    cout << endl;
+}
 
 void SqlTT::delet(string modelo, string marca, int ano){
     try{
