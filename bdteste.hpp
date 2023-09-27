@@ -16,7 +16,34 @@ class SqlTT{
     public:
         void create(string modelo, string marca, int ano);
         void connect();
+        void delet(string modelo, string marca, int ano);
 };
+
+void SqlTT::delet(string modelo, string marca, int ano){
+    try{
+        sql::PreparedStatement *prStm;
+        connect();
+        
+        con->setSchema("cars");
+        prStm = con->prepareStatement("DELETE FROM carro WHERE modelo=? AND marca=? AND ano=?");
+
+    prStm->setString(1, modelo);
+    prStm->setString(2, marca);
+    prStm->setInt(3, ano);
+    
+    prStm->execute();
+
+    cout << "Deleted!" << endl;
+
+    delete prStm;
+    delete con;
+
+    }catch(sql::SQLException &e){
+        cout << "ERRO: " << e.what();
+        cout << "Delete Problem!" << endl;
+    }
+    cout << endl;
+}
 
 void SqlTT::create(string modelo, string marca, int ano){
     try{
