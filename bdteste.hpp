@@ -36,13 +36,7 @@ void SqlTT::update(Carro *newPrt, int id){
         prStm->setString(2, newPrt->marca);
         prStm->setInt(3, newPrt->ano);
         prStm->setInt(4, id);
-        
-        /*prStm = con->prepareStatement("UPDATE carro SET ano=? WHERE modelo=? AND marca=?");
 
-        prStm->setString(1, prt->modelo);
-        prStm->setString(2, prt->marca);
-        prStm->setInt(3, newPrt->ano);
-        */
         prStm->execute();
 
         cout << "Updated!" << endl;
