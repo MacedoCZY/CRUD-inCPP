@@ -1,7 +1,6 @@
 //g++ teste.cpp -o teste.x -masm=intel -lmysqlcppconn
 #include <stdio.h>
 #include <iostream>
-#include "classe.hpp"
 #include "bdteste.hpp"
 
 int main() {
@@ -16,7 +15,7 @@ int main() {
             break;
         }
         
-        if(chc == 1 || chc == 2 || chc == 4){
+        if(chc == 1){
             cout << "Modelo:" << endl;
             string modelo;
             cin >> modelo;
@@ -38,6 +37,9 @@ int main() {
 
         }
         if(chc == 4){
+            int id;
+            cout << "Id: " << endl;
+            cin >> id;
             cout << "newModelo:" << endl;
             string newModelo;
             cin >> newModelo;
@@ -47,13 +49,13 @@ int main() {
             int newAno;
             cout << "newAno: " << endl;
             cin >> newAno;
-
+        
             Carro newCar(newModelo, newMarca, newAno);
 
             *newPrt = newCar;
             
             SqlTT bd;
-            bd.update(prt->modelo, prt->marca, prt->ano, newModelo, newMarca, newAno);
+            bd.update(newPrt, id);
         }
         if(chc != 1 && chc!= 2 && chc != 3 && chc != 4){
             cout << "Bed Opt!" << endl;
@@ -62,12 +64,15 @@ int main() {
         
         if(chc == 1){
             SqlTT bd;
-            bd.create(prt->modelo, prt->marca, prt->ano);  
+            bd.create(prt);  
         }
         
         if(chc == 2){
+            int id;
+            cout << "Id: " << endl;
+            cin >> id;
             SqlTT bd;
-            bd.delet(prt->modelo, prt->marca, prt->ano);
+            bd.delet(id);
         }
 
         if(chc == 3){
