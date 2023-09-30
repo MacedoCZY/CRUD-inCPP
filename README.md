@@ -9,5 +9,5 @@ Banco de dados mysql name="cars"
 
 Tabela name="carro"  
 
-Colunas ="modelo", "mar ca", "ano", "Id" 
+Colunas ="modelo", "marca", "ano", "Id" 
 
